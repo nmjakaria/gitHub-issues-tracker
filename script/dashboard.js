@@ -7,6 +7,29 @@ const loadIssues = async () => {
 }
 let allIssues = [];
 
+const loadIssueDetails = async (id) => {
+    const modal = document.getElementById('issueDetailsModal');
+    const modalContainer = document.getElementById('issueDetailsModalContainer');
+    
+    modalContainer.innerHTML = `<div class="p-20 flex justify-center"><span class="loading loading-spinner loading-lg text-primary"></span></div>`;
+    modal.showModal();
+
+    try {
+        const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        if (data && data.data) {
+            displayIssueDetails(data.data);
+        } else {
+            throw new Error("Data not found");
+        }
+    } catch (error) {
+        console.error(error);
+        modalContainer.innerHTML = `<div class="p-10 text-center text-red-500">Error: Data could not be loaded!</div>`;
+    }
+}
+
 const displayIssues = (issues) => {
     const container = document.getElementById('issues-container');
     const totalCount = document.getElementById('total-issues');
@@ -34,8 +57,10 @@ const displayIssues = (issues) => {
         } else if (priority === 'low') {
             priorityBg = 'bg-gray-100 text-gray-500';
         }
-        
+
         const card = document.createElement('div');
+        card.setAttribute('onclick', `loadIssueDetails(${issue.id})`);
+        card.style.cursor = 'pointer';
         card.className = `card bg-white border border-gray-200 border-t-4 shadow-sm p-5 rounded-lg flex flex-col h-full hover:shadow-lg transition-shadow ${borderColor}`;
 
         card.innerHTML = `
@@ -73,6 +98,59 @@ const displayIssues = (issues) => {
     });
 };
 
+
+const displayIssueDetails = (issue) => {
+    const modalContainer = document.getElementById('issueDetailsModalContainer');
+    
+    modalContainer.innerHTML = `
+        <div class="p-8 sm:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-[#1a202c] mb-6 tracking-tight">${issue.title}</h2>
+            
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4">
+                <span class="px-4 py-1.5 rounded-full text-white text-sm font-bold shadow-sm ${issue.status === 'open' ? 'bg-[#00A96E]' : 'bg-purple-600'}">
+                    ${issue.status === 'open' ? 'Opened' : 'Closed'}
+                </span>
+                <div class="flex items-center text-gray-500 text-sm md:text-base">
+                    <span class="mx-2 text-xl text-gray-600">•</span>
+                    <span>Opened by <span class="font-semibold text-gray-800">${issue.author || 'Fahim Ahmed'}</span></span>
+                    <span class="mx-2 text-xl text-gray-600">•</span>
+                    <span>${new Date(issue.createdAt).toLocaleDateString('en-GB')}</span>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3 mb-10">
+                ${issue.labels.map(label => {
+                    
+                    let labelColor = 'bg-[#BBF7D0]/50 text-[#00A96E]';
+                    if (label.toLowerCase().includes('bug')) labelColor = 'bg-red-50 text-red-400';
+                    if (label.toLowerCase().includes('help')) labelColor = 'bg-orange-50 text-orange-400';
+                    return `<span class="${labelColor} text-[10px] px-2 py-1 rounded font-bold uppercase">${label}</span>`;
+                }).join('')}
+            </div>
+
+            <div class="prose max-w-none mb-12">
+                <p class="text-gray-600 text-lg leading-relaxed">${issue.description || 'No detailed description available.'}</p>
+            </div>
+
+            <div class="bg-[#f8fafc] p-8 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
+                <div>
+                    <p class="text-gray-400 font-semibold text-sm uppercase tracking-widest">Assignee:</p>
+                    <p class="text-xl font-black text-gray-800">${issue.author || 'Unassigned'}</p>
+                </div>
+                <div class="sm:text-right">
+                    <p class="text-gray-400 font-semibold text-sm uppercase tracking-widest">Priority:</p>
+                    <span class="inline-block bg-[#f85252] text-white px-8 py-2 rounded-xl font-black text-sm uppercase shadow-lg shadow-red-100">${issue.priority}</span>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+                <form method="dialog">
+                    <button class="btn bg-[#4f11ff] hover:bg-[#3f0edb] text-white px-8 rounded-2xl border-none font-bold text-md h-10 transition-all hover:scale-105 active:scale-95">Close</button>
+                </form>
+            </div>
+        </div>
+    `;
+}
 
 function filterIssues(status) {
     updateButtonStyles(status);
