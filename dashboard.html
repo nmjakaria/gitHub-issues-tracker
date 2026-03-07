@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/github-logo.png" type="image/x-icon">
+    <title>GitHub Issues Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="style/styles.css">
+
+</head>
+
+<body>
+    <header class="bg-base-100 shadow-sm sticky top-0 z-50">
+        <div class="navbar container mx-auto px-4">
+
+            <div class="navbar-start w-auto">
+                <a href="dashboard.html" class="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-lg transition-all">
+                    <div class="flex items-center justify-center">
+                        <img class="h-8 w-8 object-contain" src="assets/github-logo.png" alt="logo">
+                    </div>
+                    <span class="font-semibold tracking-tight text-gray-800 text-2xl">
+                        GitHub Issues Tracker
+                    </span>
+                </a>
+            </div>
+
+            <div class="navbar-center hidden lg:flex"></div>
+
+            <div class="navbar-end flex-grow justify-end gap-3">
+                <div class="relative hidden sm:block">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+                        <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+                    </div>
+
+                    <input type="text" placeholder="Search issues..."
+                        class="input input-bordered w-32 md:w-64 h-10 pl-10 focus:outline-none focus:border-[#4f11ff] bg-gray-50 text-sm" />
+                </div>
+
+                <button
+                    class="btn btn-primary bg-[#4f11ff] hover:bg-[#3f0edb] border-none normal-case h-10 min-h-0 px-4 rounded-md shadow-md shadow-indigo-100">
+                    <i class="fa-solid fa-plus text-sm"></i>
+                    <span class="ml-2">New Issue</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="container mx-auto py-10 px-4">
+
+        <div class="issue-tracker-btn mb-8">
+            <div class="flex gap-4 items-center bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <button id="btn-all" onclick="filterIssues('all')"
+                    class="btn bg-[#4f11ff] hover:bg-[#3f0edb] text-white border-none px-8 rounded-lg font-bold min-h-0 h-11">
+                    All
+                </button>
+
+                <button id="btn-open" onclick="filterIssues('open')"
+                    class="btn bg-white hover:bg-gray-50 text-gray-500 border border-gray-200 px-8 rounded-lg font-medium min-h-0 h-11 shadow-none">
+                    Open
+                </button>
+
+                <button id="btn-closed" onclick="filterIssues('closed')"
+                    class="btn bg-white hover:bg-gray-50 text-gray-500 border border-gray-200 px-8 rounded-lg font-medium min-h-0 h-11 shadow-none">
+                    Closed
+                </button>
+            </div>
+        </div>
+
+        <div class="allIssues">
+            <div
+                class="flex justify-between items-center mb-8 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 flex items-center justify-center rounded-full bg-[#ECE4FF]">
+                        <img src="assets/Aperture.png" alt="">
+                    </div>
+                    <div>
+                        <h2 id="total-issues" class="text-2xl font-bold text-gray-800">0 Issues</h2>
+                        <p class="text-gray-500">Track and manage your project issues</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 font-medium">
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4"><img src="assets/Open-Status.png" alt=""></span> Open
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4"><img src="assets/Closed-Status .png" alt="Closed"></span> Closed
+                    </div>
+                </div>
+            </div>
+            <div id="issues-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            </div>
+        </div>
+    </main>
+    <script src="script/dashboard.js"></script>
+</body>
+
+</html>
