@@ -15,18 +15,26 @@ const displayIssues = (issues) => {
     container.innerHTML = "";
 
     issues.forEach(issue => {
-        
+
         let borderColor = 'border-t-gray-300';
         let priorityBg = 'bg-gray-100 text-gray-500';
 
-        if (issue.priority === 'high') {
+        if (issue.status === 'open') {
             borderColor = 'border-t-green-500';
-            priorityBg = 'bg-red-50 text-red-500';
-        } else if (issue.priority === 'medium') {
-            borderColor = 'border-t-yellow-400';
-            priorityBg = 'bg-yellow-50 text-yellow-600';
+        } else if (issue.status === 'closed') {
+            borderColor = 'border-t-purple-500';
         }
 
+        const priority = issue.priority.toLowerCase();
+
+        if (priority === 'high') {
+            priorityBg = 'bg-red-50 text-red-500';
+        } else if (priority === 'medium') {
+            priorityBg = 'bg-yellow-50 text-yellow-600';
+        } else if (priority === 'low') {
+            priorityBg = 'bg-gray-100 text-gray-500';
+        }
+        
         const card = document.createElement('div');
         card.className = `card bg-white border border-gray-200 border-t-4 shadow-sm p-5 rounded-lg flex flex-col h-full hover:shadow-lg transition-shadow ${borderColor}`;
 
@@ -47,11 +55,11 @@ const displayIssues = (issues) => {
 
             <div class="flex flex-wrap gap-2 mb-4">
                 ${issue.labels.map(label => {
-                    let labelColor = 'bg-[#BBF7D0]/50 text-[#00A96E]';
-                    if (label.toLowerCase().includes('bug')) labelColor = 'bg-red-50 text-red-400';
-                    if (label.toLowerCase().includes('help')) labelColor = 'bg-orange-50 text-orange-400';
-                    return `<span class="${labelColor} text-[10px] px-2 py-1 rounded font-bold uppercase">${label}</span>`;
-                }).join('')}
+            let labelColor = 'bg-[#BBF7D0]/50 text-[#00A96E]';
+            if (label.toLowerCase().includes('bug')) labelColor = 'bg-red-50 text-red-400';
+            if (label.toLowerCase().includes('help')) labelColor = 'bg-orange-50 text-orange-400';
+            return `<span class="${labelColor} text-[10px] px-2 py-1 rounded font-bold uppercase">${label}</span>`;
+        }).join('')}
             </div>
 
             <hr class="border-gray-100 mb-3">
