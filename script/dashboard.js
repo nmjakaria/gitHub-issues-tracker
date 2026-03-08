@@ -179,4 +179,21 @@ function updateButtonStyles(activeStatus) {
     });
 }
 
+
+const searchInput = document.getElementById('search-input');
+
+searchInput.addEventListener('input', (event) => {
+    const searchText = event.target.value.toLowerCase();
+    
+        const filteredIssues = allIssues.filter(issue => {
+        const title = issue.title.toLowerCase();
+        const description = (issue.description || "").toLowerCase();
+        
+        return title.includes(searchText) || description.includes(searchText);
+    });
+
+    displayIssues(filteredIssues);
+});
+
+
 loadIssues();
