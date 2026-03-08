@@ -14,6 +14,7 @@ document.querySelector('form').addEventListener('submit', function (event) {
 
     setTimeout(() => {
         if (usernameInput === validUsername && passwordInput === validPassword) {
+            localStorage.setItem('userLoggedIn', 'true');
             window.location.href = "dashboard.html";
         } else {
             alert("Your username or password is incorrect. Please try again.");

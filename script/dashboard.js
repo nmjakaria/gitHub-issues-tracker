@@ -1,3 +1,8 @@
+// check if user is logged in, if not redirect to login page
+if (localStorage.getItem('userLoggedIn') !== 'true') {
+    window.location.href = "index.html";
+}
+
 const loadIssues = async () => {
     const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
     const res = await fetch(url);
@@ -215,5 +220,9 @@ searchInput.forEach(input => {
 });
 });
 
+function handleLogout() {
+    localStorage.removeItem('userLoggedIn');
+    window.location.href = "index.html";
+}
 
 loadIssues();
