@@ -133,13 +133,13 @@ const displayIssueDetails = (issue) => {
             </div>
 
             <div class="bg-[#f8fafc] p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-4">
-                <div>
+                <div class="sm:text-left flex-1">
                     <p class="text-gray-400 font-semibold text-sm uppercase tracking-widest">Assignee:</p>
                     <p class="text-xl font-black text-gray-800">${issue.author || 'Unassigned'}</p>
                 </div>
-                <div class="sm:text-right">
+                <div class="sm:text-left flex-1">
                     <p class="text-gray-400 font-semibold text-sm uppercase tracking-widest">Priority:</p>
-                    <span class="inline-block bg-[#f85252] text-white px-8 py-2 rounded-xl font-black text-sm uppercase shadow-lg shadow-red-100">${issue.priority}</span>
+                    <span class="inline-block bg-[#f85252] text-white px-6 py-2 mt-2 rounded-full font-black text-sm uppercase shadow-lg shadow-red-100">${issue.priority}</span>
                 </div>
             </div>
 
