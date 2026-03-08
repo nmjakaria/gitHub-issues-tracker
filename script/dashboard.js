@@ -103,8 +103,8 @@ const displayIssueDetails = (issue) => {
     const modalContainer = document.getElementById('issueDetailsModalContainer');
     
     modalContainer.innerHTML = `
-        <div class="p-8 sm:p-12">
-            <h2 class="text-2xl md:text-3xl font-bold text-[#1a202c] mb-6 tracking-tight">${issue.title}</h2>
+        <div class="p-4 sm:p-8 md:p-10">
+            <h2 class="text-xl md:text-2xl font-bold text-[#1a202c] mb-4 tracking-tight">${issue.title}</h2>
             
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4">
                 <span class="px-4 py-1.5 rounded-full text-white text-sm font-bold shadow-sm ${issue.status === 'open' ? 'bg-[#00A96E]' : 'bg-purple-600'}">
@@ -128,11 +128,11 @@ const displayIssueDetails = (issue) => {
                 }).join('')}
             </div>
 
-            <div class="prose max-w-none mb-12">
+            <div class="prose max-w-none mb-8">
                 <p class="text-gray-600 text-lg leading-relaxed">${issue.description || 'No detailed description available.'}</p>
             </div>
 
-            <div class="bg-[#f8fafc] p-8 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
+            <div class="bg-[#f8fafc] p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-4">
                 <div>
                     <p class="text-gray-400 font-semibold text-sm uppercase tracking-widest">Assignee:</p>
                     <p class="text-xl font-black text-gray-800">${issue.author || 'Unassigned'}</p>
@@ -144,8 +144,8 @@ const displayIssueDetails = (issue) => {
             </div>
 
             <div class="flex justify-end pt-2">
-                <form method="dialog">
-                    <button class="btn bg-[#4f11ff] hover:bg-[#3f0edb] text-white px-8 rounded-2xl border-none font-bold text-md h-10 transition-all hover:scale-105 active:scale-95">Close</button>
+                <form method="dialog" class="w-full sm:w-auto">
+                    <button class="btn w-full sm:w-auto bg-[#4f11ff] hover:bg-[#3f0edb] text-white px-10 rounded-xl border-none font-bold text-sm sm:text-md h-12 transition-all hover:shadow-indigo-200 hover:shadow-lg active:scale-95">Close</button>
                 </form>
             </div>
         </div>
