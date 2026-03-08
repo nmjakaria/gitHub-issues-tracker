@@ -10,7 +10,7 @@ let allIssues = [];
 const loadIssueDetails = async (id) => {
     const modal = document.getElementById('issueDetailsModal');
     const modalContainer = document.getElementById('issueDetailsModalContainer');
-    
+
     modalContainer.innerHTML = `<div class="p-20 flex justify-center"><span class="loading loading-spinner loading-lg text-primary"></span></div>`;
     modal.showModal();
 
@@ -18,7 +18,7 @@ const loadIssueDetails = async (id) => {
         const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
         const res = await fetch(url);
         const data = await res.json();
-        
+
         if (data && data.data) {
             displayIssueDetails(data.data);
         } else {
@@ -101,7 +101,7 @@ const displayIssues = (issues) => {
 
 const displayIssueDetails = (issue) => {
     const modalContainer = document.getElementById('issueDetailsModalContainer');
-    
+
     modalContainer.innerHTML = `
         <div class="p-4 sm:p-8 md:p-10">
             <h2 class="text-xl md:text-2xl font-bold text-[#1a202c] mb-4 tracking-tight">${issue.title}</h2>
@@ -120,12 +120,12 @@ const displayIssueDetails = (issue) => {
 
             <div class="flex flex-wrap gap-3 mb-10">
                 ${issue.labels.map(label => {
-                    
-                    let labelColor = 'bg-[#BBF7D0]/50 text-[#00A96E]';
-                    if (label.toLowerCase().includes('bug')) labelColor = 'bg-red-50 text-red-400';
-                    if (label.toLowerCase().includes('help')) labelColor = 'bg-orange-50 text-orange-400';
-                    return `<span class="${labelColor} text-[10px] px-2 py-1 rounded font-bold uppercase">${label}</span>`;
-                }).join('')}
+
+        let labelColor = 'bg-[#BBF7D0]/50 text-[#00A96E]';
+        if (label.toLowerCase().includes('bug')) labelColor = 'bg-red-50 text-red-400';
+        if (label.toLowerCase().includes('help')) labelColor = 'bg-orange-50 text-orange-400';
+        return `<span class="${labelColor} text-[10px] px-2 py-1 rounded font-bold uppercase">${label}</span>`;
+    }).join('')}
             </div>
 
             <div class="prose max-w-none mb-8">
@@ -153,14 +153,25 @@ const displayIssueDetails = (issue) => {
 }
 
 function filterIssues(status) {
+    const container = document.getElementById('issues-container');
     updateButtonStyles(status);
+    container.innerHTML = `
+        <div class="col-span-full flex justify-center items-center py-24 gap-4">
+            <span class="loading loading-spinner loading-lg text-[#4f11ff]"></span>
+            <p class="text-gray-500 text-sm animate-pulse">
+                Loading data, please wait...
+            </p>
+        </div>
+    `;
 
-    if (status === 'all') {
-        displayIssues(allIssues);
-    } else {
-        const filtered = allIssues.filter(issue => issue.status === status);
-        displayIssues(filtered);
-    }
+    setTimeout(() => {
+        if (status === 'all') {
+            displayIssues(allIssues);
+        } else {
+            const filtered = allIssues.filter(issue => issue.status === status);
+            displayIssues(filtered);
+        }
+    }, 300);
 }
 
 function updateButtonStyles(activeStatus) {
@@ -184,11 +195,11 @@ const searchInput = document.getElementById('search-input');
 
 searchInput.addEventListener('input', (event) => {
     const searchText = event.target.value.toLowerCase();
-    
-        const filteredIssues = allIssues.filter(issue => {
+
+    const filteredIssues = allIssues.filter(issue => {
         const title = issue.title.toLowerCase();
         const description = (issue.description || "").toLowerCase();
-        
+
         return title.includes(searchText) || description.includes(searchText);
     });
 
