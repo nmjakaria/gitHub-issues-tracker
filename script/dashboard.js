@@ -191,19 +191,28 @@ function updateButtonStyles(activeStatus) {
 }
 
 
-const searchInput = document.getElementById('search-input');
+const searchInput = document.querySelectorAll('.search-field');
+let searchTimeout;
 
-searchInput.addEventListener('input', (event) => {
-    const searchText = event.target.value.toLowerCase();
+searchInput.forEach(input => {
+    input.addEventListener('input', (event) => {
+        const searchText = event.target.value.toLowerCase();
+        const container = document.getElementById('issues-container');
+        clearTimeout(searchTimeout);
+        container.innerHTML = `<div class="col-span-full flex justify-center py-20"><span class="loading loading-spinner loading-lg text-[#4f11ff]"></span></div>`;
 
-    const filteredIssues = allIssues.filter(issue => {
+    setTimeout(() => {
+        const filteredIssues = allIssues.filter(issue => {
         const title = issue.title.toLowerCase();
         const description = (issue.description || "").toLowerCase();
+        const labels = issue.labels.map(label => label.toLowerCase()).join(' ');
 
-        return title.includes(searchText) || description.includes(searchText);
+        return title.includes(searchText) || description.includes(searchText) || labels.includes(searchText);
     });
 
     displayIssues(filteredIssues);
+    }, 300);
+});
 });
 
 
