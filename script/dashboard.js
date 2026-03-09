@@ -117,7 +117,7 @@ const displayIssueDetails = (issue) => {
                 </span>
                 <div class="flex items-center text-gray-500 text-sm md:text-base">
                     <span class="mx-2 text-xl text-gray-600">•</span>
-                    <span>Opened by <span class="font-semibold text-gray-800">${issue.author || 'Fahim Ahmed'}</span></span>
+                    <span>Opened by <span class="font-semibold text-gray-800">${issue.assignee || 'Fahim Ahmed'}</span></span>
                     <span class="mx-2 text-xl text-gray-600">•</span>
                     <span>${new Date(issue.createdAt).toLocaleDateString('en-GB')}</span>
                 </div>
@@ -140,7 +140,7 @@ const displayIssueDetails = (issue) => {
             <div class="bg-[#f8fafc] p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-4">
                 <div class="sm:text-left flex-1">
                     <p class="text-gray-400 font-semibold text-sm uppercase tracking-widest">Assignee:</p>
-                    <p class="text-xl font-black text-gray-800">${issue.author || 'Unassigned'}</p>
+                    <p class="text-xl font-black text-gray-800">${issue.assignee || 'Fahim Ahmed'}</p>
                 </div>
                 <div class="sm:text-left flex-1">
                     <p class="text-gray-400 font-semibold text-sm uppercase tracking-widest">Priority:</p>
